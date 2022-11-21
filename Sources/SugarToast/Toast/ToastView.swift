@@ -25,35 +25,67 @@
 
 import UIKit
 
-struct ToastViewContentSettings: ToastConfigurable {
+public struct ToastViewContentSettings: ToastConfigurable {
     // Skeleton Properties
-    var type: ToastType = .leadingPinnedImage
-    var cornerRadius: CGFloat = 20
-    var backgroundColor: UIColor = .systemBlue
-    var shouldDismissOnTap: Bool = true
-    var horizontalSpacing: CGFloat = 20
-    var verticalSpacing: CGFloat = 4
+    public var type: ToastType
+    public var cornerRadius: CGFloat
+    public var backgroundColor: UIColor
+    public var shouldDismissOnTap: Bool
+    public var horizontalSpacing: CGFloat
+    public var verticalSpacing: CGFloat
     
     // Content Properties
-    var titleFont: UIFont = .systemFont(ofSize: 16, weight: .medium)
-    var titleColor: UIColor = .white
-    var titleTextAlignment: NSTextAlignment = .left
+    public var titleFont: UIFont
+    public var titleColor: UIColor
+    public var titleTextAlignment: NSTextAlignment
     
-    var subtitleFont: UIFont = .systemFont(ofSize: 12, weight: .regular)
-    var subtitleColor: UIColor = .white
-    var subtitleTextAlignment: NSTextAlignment = .left
+    public var subtitleFont: UIFont
+    public var subtitleColor: UIColor
+    public var subtitleTextAlignment: NSTextAlignment
     
-    var verticalInsets: CGFloat = 32
-    var horizontalInsets: CGFloat = 24
+    public var verticalInsets: CGFloat
+    public var horizontalInsets: CGFloat
+    
+    public init(
+        type: ToastType = .leadingPinnedImage,
+        cornerRadius: CGFloat = 20.0,
+        backgroundColor: UIColor = .systemBlue,
+        shouldDismissOnTap: Bool = true,
+        horizontalSpacing: CGFloat = 20.0,
+        verticalSpacing: CGFloat = 4.0,
+        titleFont: UIFont = .systemFont(ofSize: 16, weight: .medium),
+        titleColor: UIColor = .white,
+        titleTextAlignment: NSTextAlignment = .left,
+        subtitleFont: UIFont = .systemFont(ofSize: 12, weight: .regular),
+        subtitleColor: UIColor = .white,
+        subtitleTextAlignment: NSTextAlignment = .left,
+        verticalInsets: CGFloat = 32.0,
+        horizontalInsets: CGFloat = 24.0
+    ) {
+        self.type = type
+        self.cornerRadius = cornerRadius
+        self.backgroundColor = backgroundColor
+        self.shouldDismissOnTap = shouldDismissOnTap
+        self.horizontalSpacing = horizontalSpacing
+        self.verticalSpacing = verticalSpacing
+        self.titleFont = titleFont
+        self.titleColor = titleColor
+        self.titleTextAlignment = titleTextAlignment
+        self.subtitleFont = subtitleFont
+        self.subtitleColor = subtitleColor
+        self.subtitleTextAlignment = subtitleTextAlignment
+        self.verticalInsets = verticalInsets
+        self.horizontalInsets = horizontalInsets
+    }
 }
 
-struct ToastViewData: ToastDataPassable {
-    var image: UIImage?
-    var title: String?
-    var subtitle: String?
-    var customView: UIView?
+public struct ToastViewData: ToastDataPassable {
+    public var image: UIImage?
+    public var title: String?
+    public var subtitle: String?
+    public var customView: UIView?
     
-    init(image: UIImage, title: String, subtitle: String) {
+    public init(image: UIImage, title: String, subtitle: String) {
         self.image = image
         self.title = title
         self.subtitle = subtitle
