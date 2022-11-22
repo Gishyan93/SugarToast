@@ -39,7 +39,7 @@ extension ToastPresentable {
 }
 
 extension ToastPresentable where Self: UIView {
-    var view: UIView! { return self }
+    public var view: UIView! { return self }
 
     var presenter: ToastPresenter {
         ToastPresenter(with: self)

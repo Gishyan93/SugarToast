@@ -92,8 +92,8 @@ public struct ToastViewData: ToastDataPassable {
     }
 }
 
-class ToastView: UIView, ToastPresentable {
-    weak var toastPresenter: ToastPresenter?
+public final class ToastView: UIView, ToastPresentable {
+    weak public var toastPresenter: ToastPresenter?
     
     var mainStackView: UIStackView!
     var messagesStackView: UIStackView!
@@ -112,7 +112,7 @@ class ToastView: UIView, ToastPresentable {
         }
     }
     
-    func shouldDismissOnTap() -> Bool { _shouldDismissOnTap }
+    public func shouldDismissOnTap() -> Bool { _shouldDismissOnTap }
     
     func set(data: ToastDataPassable) {
         guard
@@ -220,7 +220,7 @@ private extension ToastView {
 }
 
 extension ToastView {
-    static func presenter(
+    public static func presenter(
         forAlertWithData data: ToastDataPassable,
         with settings: ToastConfigurable
     ) -> ToastPresenter {
@@ -230,7 +230,7 @@ extension ToastView {
         return toastView.presenter
     }
     
-    static func presenter(
+    public static func presenter(
         forAlertWithData data: ToastDataPassable
     ) -> ToastPresenter {
         let toastView = ToastView()
