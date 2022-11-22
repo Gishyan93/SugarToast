@@ -234,6 +234,8 @@ extension ToastView {
         forAlertWithData data: ToastDataPassable
     ) -> ToastPresenter {
         let toastView = ToastView()
+        let settings = ToastViewContentSettings()
+        toastView.update(settings: settings)
         toastView.set(data: data)
         return toastView.presenter
     }
