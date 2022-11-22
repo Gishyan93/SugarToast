@@ -120,7 +120,12 @@ public class ToastPresenter: UIViewController {
             toastViewConstraint.constant = view.safeAreaInsets.bottom - verticalPaddings
         }
         
-        UIView.animate(withDuration: 0.3, delay: 0.7) {
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0.0,
+            usingSpringWithDamping: 0.7,
+            initialSpringVelocity: 0.0
+        ) {
             self.view.layoutIfNeeded()
         }
     }
@@ -135,9 +140,9 @@ public class ToastPresenter: UIViewController {
         
         UIView.animate(
             withDuration: 0.3,
-            delay: 0.7,
+            delay: 0.0,
             usingSpringWithDamping: 0.7,
-            initialSpringVelocity: 0
+            initialSpringVelocity: 0.0
         ) {
             self.view.layoutIfNeeded()
         } completion: { _ in
