@@ -25,7 +25,7 @@
 
 import UIKit
 
-protocol ToastPresentable: AnyObject {
+public protocol ToastPresentable: AnyObject {
     static func presenter(forAlertWithData data: ToastDataPassable,
                           with settings: ToastConfigurable) -> ToastPresenter
     static func presenter(forAlertWithData data: ToastDataPassable) -> ToastPresenter

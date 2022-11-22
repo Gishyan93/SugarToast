@@ -53,4 +53,4 @@ public protocol ToastContentConfigurable {
     var horizontalInsets: CGFloat { get set }
 }
 
-typealias ToastConfigurable = ToastSkeletonConfigurable & ToastContentConfigurable
+public typealias ToastConfigurable = ToastSkeletonConfigurable & ToastContentConfigurable

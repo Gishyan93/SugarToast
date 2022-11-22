@@ -25,12 +25,12 @@
 
 import UIKit
 
-enum ToastPosition {
+public enum ToastPosition {
     case top
     case bottom
 }
 
-class ToastPresenter: UIViewController {
+public class ToastPresenter: UIViewController {
     
     var toastContainerView: UIView!
     var presentingView: ToastPresentable!
@@ -42,7 +42,7 @@ class ToastPresenter: UIViewController {
     public var autohideDuration: Double = 3
     public var verticalPaddings: CGFloat = 8
     public var horizontalPaddings: CGFloat = 16
-    var closeAction: (() -> Void)?
+    public var closeAction: (() -> Void)?
     
     init(with view: ToastPresentable & UIView) {
         super.init(nibName: nil, bundle: nil)
@@ -67,7 +67,7 @@ class ToastPresenter: UIViewController {
         self.modalPresentationStyle = .overFullScreen
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         initToastContaineriew()
         constraintHierarchy()
         activateConstraints()
@@ -125,7 +125,7 @@ class ToastPresenter: UIViewController {
         }
     }
     
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         switch position {
         case .top:
             toastViewConstraint.constant = -presentingView.view.bounds.height
