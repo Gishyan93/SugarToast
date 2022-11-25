@@ -25,7 +25,7 @@
 
 import UIKit
 
-public struct ToastViewContentSettings: ToastConfigurable {
+public struct ToastSettings: ToastConfigurable {
     // Skeleton Properties
     public var type: ToastType
     public var cornerRadius: CGFloat
@@ -46,36 +46,21 @@ public struct ToastViewContentSettings: ToastConfigurable {
     public var verticalInsets: CGFloat
     public var horizontalInsets: CGFloat
     
-    public init(
-        type: ToastType = .leadingPinnedImage,
-        cornerRadius: CGFloat = 20.0,
-        backgroundColor: UIColor = .systemBlue,
-        shouldDismissOnTap: Bool = true,
-        horizontalSpacing: CGFloat = 20.0,
-        verticalSpacing: CGFloat = 4.0,
-        titleFont: UIFont = .systemFont(ofSize: 16, weight: .medium),
-        titleColor: UIColor = .white,
-        titleTextAlignment: NSTextAlignment = .left,
-        subtitleFont: UIFont = .systemFont(ofSize: 12, weight: .regular),
-        subtitleColor: UIColor = .white,
-        subtitleTextAlignment: NSTextAlignment = .left,
-        verticalInsets: CGFloat = 32.0,
-        horizontalInsets: CGFloat = 24.0
-    ) {
-        self.type = type
-        self.cornerRadius = cornerRadius
-        self.backgroundColor = backgroundColor
-        self.shouldDismissOnTap = shouldDismissOnTap
-        self.horizontalSpacing = horizontalSpacing
-        self.verticalSpacing = verticalSpacing
-        self.titleFont = titleFont
-        self.titleColor = titleColor
-        self.titleTextAlignment = titleTextAlignment
-        self.subtitleFont = subtitleFont
-        self.subtitleColor = subtitleColor
-        self.subtitleTextAlignment = subtitleTextAlignment
-        self.verticalInsets = verticalInsets
-        self.horizontalInsets = horizontalInsets
+    public init() {
+        self.type = .leadingPinnedImage
+        self.cornerRadius = 20.0
+        self.backgroundColor = .systemBlue
+        self.shouldDismissOnTap = true
+        self.horizontalSpacing = 20.0
+        self.verticalSpacing = 4.0
+        self.titleFont = .systemFont(ofSize: 16, weight: .medium)
+        self.titleColor = .white
+        self.titleTextAlignment = .left
+        self.subtitleFont = .systemFont(ofSize: 12, weight: .regular)
+        self.subtitleColor = .white
+        self.subtitleTextAlignment = .left
+        self.verticalInsets = 32.0
+        self.horizontalInsets = 24.0
     }
 }
 
@@ -89,6 +74,15 @@ public struct ToastViewData: ToastDataPassable {
         self.image = image
         self.title = title
         self.subtitle = subtitle
+    }
+    
+    public init(image: UIImage, title: String) {
+        self.image = image
+        self.title = title
+    }
+    
+    public init(title: String) {
+        self.title = title
     }
 }
 
@@ -106,7 +100,7 @@ public final class ToastView: UIView, ToastPresentable {
     var bottomConstraint: NSLayoutConstraint!
     
     private var _shouldDismissOnTap: Bool = true
-    private(set) var _settings = ToastViewContentSettings() {
+    private(set) var _settings = ToastSettings() {
         didSet {
             initToastSkeleton()
         }
@@ -134,7 +128,7 @@ public final class ToastView: UIView, ToastPresentable {
     
     func update(settings: ToastConfigurable) {
         guard
-            let settings = settings as? ToastViewContentSettings
+            let settings = settings as? ToastSettings
         else { fatalError("Couldn't cast to appropriate format") }
         _settings = settings
     }
@@ -234,7 +228,7 @@ extension ToastView {
         forAlertWithData data: ToastDataPassable
     ) -> ToastPresenter {
         let toastView = ToastView()
-        let settings = ToastViewContentSettings()
+        let settings = ToastSettings()
         toastView.update(settings: settings)
         toastView.set(data: data)
         return toastView.presenter

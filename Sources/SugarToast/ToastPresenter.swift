@@ -65,6 +65,7 @@ public class ToastPresenter: UIViewController {
     
     func commonInit() {
         self.modalPresentationStyle = .overFullScreen
+        self.modalTransitionStyle = .crossDissolve
     }
     
     public override func viewDidLoad() {
@@ -86,6 +87,7 @@ public class ToastPresenter: UIViewController {
         )
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
+        tap.delegate = self
         view.addGestureRecognizer(tap)
     }
     
@@ -180,5 +182,15 @@ private extension ToastPresenter {
                 constant: -horizontalPaddings
             )
         ])
+    }
+}
+
+extension ToastPresenter: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
+        if touch.view == self.view { return false }
+        return true
     }
 }
