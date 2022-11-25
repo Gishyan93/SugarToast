@@ -26,6 +26,12 @@
 import UIKit
 
 public struct ToastSettings: ToastConfigurable {
+    // Appearance
+    public var position: ToastPosition
+    public var autohideDuration: Double
+    public var verticalPaddings: CGFloat
+    public var horizontalPaddings: CGFloat
+    
     // Skeleton Properties
     public var type: ToastType
     public var cornerRadius: CGFloat
@@ -47,6 +53,10 @@ public struct ToastSettings: ToastConfigurable {
     public var horizontalInsets: CGFloat
     
     public init() {
+        self.position = .bottom
+        self.autohideDuration = 3.0
+        self.verticalPaddings = 8.0
+        self.horizontalPaddings = 16.0
         self.type = .leadingPinnedImage
         self.cornerRadius = 20.0
         self.backgroundColor = .systemBlue
@@ -87,6 +97,7 @@ public struct ToastViewData: ToastDataPassable {
 }
 
 public final class ToastView: UIView, ToastPresentable {
+    
     weak public var toastPresenter: ToastPresenter?
     
     var mainStackView: UIStackView!
@@ -100,6 +111,7 @@ public final class ToastView: UIView, ToastPresentable {
     var bottomConstraint: NSLayoutConstraint!
     
     private var _shouldDismissOnTap: Bool = true
+    private var _position: ToastPosition = .bottom
     private(set) var _settings = ToastSettings() {
         didSet {
             initToastSkeleton()
@@ -107,6 +119,10 @@ public final class ToastView: UIView, ToastPresentable {
     }
     
     public func shouldDismissOnTap() -> Bool { _shouldDismissOnTap }
+    public var position: ToastPosition = .bottom
+    public var autohideDuration: Double = 3.0
+    public var verticalPaddings: CGFloat = 8.0
+    public var horizontalPaddings: CGFloat = 16.0
     
     func set(data: ToastDataPassable) {
         guard
@@ -191,6 +207,10 @@ private extension ToastView {
         subtitleLabel.textColor = _settings.subtitleColor
         
         _shouldDismissOnTap = _settings.shouldDismissOnTap
+        position = _settings.position
+        autohideDuration = _settings.autohideDuration
+        horizontalPaddings = _settings.horizontalPaddings
+        verticalPaddings = _settings.verticalPaddings
     }
     
     func constructHierarchy() {

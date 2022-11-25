@@ -31,6 +31,10 @@ public protocol ToastPresentable: AnyObject {
     static func presenter(forAlertWithData data: ToastDataPassable) -> ToastPresenter
     var toastPresenter: ToastPresenter? { get set }
     var view: UIView! { get }
+    var position: ToastPosition { get set }
+    var autohideDuration: Double { get set }
+    var verticalPaddings: CGFloat { get set }
+    var horizontalPaddings: CGFloat { get set }
     func shouldDismissOnTap() -> Bool
 }
 

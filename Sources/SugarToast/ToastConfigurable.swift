@@ -31,6 +31,13 @@ public enum ToastType {
     case centeredImage
 }
 
+public protocol ToastAppearanceConfigurable {
+    var position: ToastPosition { get set }
+    var autohideDuration: Double { get set }
+    var verticalPaddings: CGFloat { get set }
+    var horizontalPaddings: CGFloat { get set }
+}
+
 public protocol ToastSkeletonConfigurable {
     var type: ToastType { get set }
     var cornerRadius: CGFloat { get set }
@@ -53,4 +60,6 @@ public protocol ToastContentConfigurable {
     var horizontalInsets: CGFloat { get set }
 }
 
-public typealias ToastConfigurable = ToastSkeletonConfigurable & ToastContentConfigurable
+public typealias ToastConfigurable = ToastSkeletonConfigurable &
+                                     ToastContentConfigurable &
+                                     ToastAppearanceConfigurable

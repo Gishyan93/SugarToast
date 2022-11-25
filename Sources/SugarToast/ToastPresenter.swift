@@ -38,10 +38,6 @@ public class ToastPresenter: UIViewController {
     var toastViewConstraint: NSLayoutConstraint!
     var updateToastViewWorkItem: DispatchWorkItem?
     
-    public var position: ToastPosition = .bottom
-    public var autohideDuration: Double = 3
-    public var verticalPaddings: CGFloat = 8
-    public var horizontalPaddings: CGFloat = 16
     public var closeAction: (() -> Void)?
     
     init(with view: ToastPresentable & UIView) {
@@ -82,7 +78,7 @@ public class ToastPresenter: UIViewController {
         }
         
         DispatchQueue.main.asyncAfter(
-            deadline: .now() + autohideDuration,
+            deadline: .now() + presentingView.autohideDuration,
             execute: updateToastViewWorkItem!
         )
         
@@ -101,7 +97,7 @@ public class ToastPresenter: UIViewController {
     
     func showToastView() {
         
-        switch position {
+        switch presentingView.position {
         case .top:
             toastViewConstraint = presentingView.view.topAnchor.constraint(equalTo: view.topAnchor)
             toastViewConstraint.isActive = true
@@ -110,7 +106,7 @@ public class ToastPresenter: UIViewController {
             toastViewConstraint.constant = -presentingView.view.bounds.height
             view.layoutIfNeeded()
             
-            toastViewConstraint.constant = view.safeAreaInsets.top + verticalPaddings
+            toastViewConstraint.constant = view.safeAreaInsets.top + presentingView.verticalPaddings
         case .bottom:
             toastViewConstraint = presentingView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             toastViewConstraint.isActive = true
@@ -119,7 +115,7 @@ public class ToastPresenter: UIViewController {
             toastViewConstraint.constant = presentingView.view.bounds.height
             view.layoutIfNeeded()
             
-            toastViewConstraint.constant = view.safeAreaInsets.bottom - verticalPaddings
+            toastViewConstraint.constant = view.safeAreaInsets.bottom - presentingView.verticalPaddings
         }
         
         UIView.animate(
@@ -133,7 +129,7 @@ public class ToastPresenter: UIViewController {
     }
     
     public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        switch position {
+        switch presentingView.position {
         case .top:
             toastViewConstraint.constant = -presentingView.view.bounds.height
         case .bottom:
@@ -175,11 +171,11 @@ private extension ToastPresenter {
             
             toastContainerView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
-                constant: horizontalPaddings
+                constant: presentingView.horizontalPaddings
             ),
             toastContainerView.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor,
-                constant: -horizontalPaddings
+                constant: -presentingView.horizontalPaddings
             )
         ])
     }

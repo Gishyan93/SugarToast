@@ -76,9 +76,10 @@ class ViewController: UIViewController {
         let data = ToastViewData(image: UIImage(named: "info")!,
                                  title: "Sugar Title",
                                  subtitle: "Sugar Subtitle")
+        var config = ToastSettings()
+        config.autohideDuration = 10
                     
-        let presenter = ToastView.presenter(forAlertWithData: data)
-        presenter.autohideDuration = 10
+        let presenter = ToastView.presenter(forAlertWithData: data, with: config)
         present(presenter, animated: true)
     }
     
@@ -127,14 +128,12 @@ class ViewController: UIViewController {
         config.verticalSpacing = 30
         config.horizontalSpacing = 15
         config.cornerRadius = 0
+        config.position = .top
+        config.autohideDuration = 5
+        config.horizontalPaddings = 0
+        config.verticalPaddings = 0
         
         let presenter = ToastView.presenter(forAlertWithData: data, with: config)
-        presenter.position = .top
-        presenter.autohideDuration = 5
-        presenter.verticalPaddings = 0
-        presenter.horizontalPaddings = 0
-        
         present(presenter, animated: true)
     }
 }
-

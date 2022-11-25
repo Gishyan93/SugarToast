@@ -14,7 +14,7 @@
 		9831CD59292EC52A008B77A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9831CD58292EC52A008B77A8 /* Assets.xcassets */; };
 		9831CD5C292EC52A008B77A8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9831CD5A292EC52A008B77A8 /* LaunchScreen.storyboard */; };
 		9831CD64292ECB71008B77A8 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9831CD63292ECB71008B77A8 /* DataSource.swift */; };
-		9831CD68292ED153008B77A8 /* SugarToast in Frameworks */ = {isa = PBXBuildFile; productRef = 9831CD67292ED153008B77A8 /* SugarToast */; };
+		D2F16FCE29313FC0008E8781 /* SugarToast in Frameworks */ = {isa = PBXBuildFile; productRef = D2F16FCD29313FC0008E8781 /* SugarToast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9831CD68292ED153008B77A8 /* SugarToast in Frameworks */,
+				D2F16FCE29313FC0008E8781 /* SugarToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,7 +99,7 @@
 			);
 			name = SampleApp;
 			packageProductDependencies = (
-				9831CD67292ED153008B77A8 /* SugarToast */,
+				D2F16FCD29313FC0008E8781 /* SugarToast */,
 			);
 			productName = SampleApp;
 			productReference = 9831CD4C292EC527008B77A8 /* SampleApp.app */;
@@ -235,7 +235,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -289,7 +289,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -381,7 +381,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9831CD67292ED153008B77A8 /* SugarToast */ = {
+		D2F16FCD29313FC0008E8781 /* SugarToast */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SugarToast;
 		};
