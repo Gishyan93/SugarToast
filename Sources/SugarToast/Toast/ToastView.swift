@@ -25,12 +25,21 @@
 
 import UIKit
 
-public struct ToastSettings: ToastConfigurable {
-    // Appearance
+public struct ToastAppearance: ToastAppearanceConfigurable {
     public var position: ToastPosition
     public var autohideDuration: Double
     public var verticalPaddings: CGFloat
     public var horizontalPaddings: CGFloat
+    
+    public init() {
+        self.position = .bottom
+        self.autohideDuration = 3.0
+        self.verticalPaddings = 8.0
+        self.horizontalPaddings = 16.0
+    }
+}
+
+public struct ToastSettings: ToastConfigurable {
     
     // Skeleton Properties
     public var type: ToastType
@@ -53,10 +62,6 @@ public struct ToastSettings: ToastConfigurable {
     public var horizontalInsets: CGFloat
     
     public init() {
-        self.position = .bottom
-        self.autohideDuration = 3.0
-        self.verticalPaddings = 8.0
-        self.horizontalPaddings = 16.0
         self.type = .leadingPinnedImage
         self.cornerRadius = 20.0
         self.backgroundColor = .systemBlue
@@ -94,11 +99,21 @@ public struct ToastViewData: ToastDataPassable {
     public init(title: String) {
         self.title = title
     }
+    
+    public init() {
+        self.image = nil
+        self.title = nil
+        self.subtitle = nil
+    }
 }
 
 public final class ToastView: UIView, ToastPresentable {
     
     weak public var toastPresenter: ToastPresenter?
+    public var position: ToastPosition = .bottom
+    public var autohideDuration: Double = 3.0
+    public var verticalPaddings: CGFloat = 8.0
+    public var horizontalPaddings: CGFloat = 16.0
     
     var mainStackView: UIStackView!
     var messagesStackView: UIStackView!
@@ -109,7 +124,8 @@ public final class ToastView: UIView, ToastPresentable {
     var leadingConstraint: NSLayoutConstraint!
     var trailingConstraint: NSLayoutConstraint!
     var bottomConstraint: NSLayoutConstraint!
-    
+    var isSkeletorSet: Bool = false
+        
     private var _shouldDismissOnTap: Bool = true
     private var _position: ToastPosition = .bottom
     private(set) var _settings = ToastSettings() {
@@ -117,38 +133,55 @@ public final class ToastView: UIView, ToastPresentable {
             initToastSkeleton()
         }
     }
+    private(set) var _appearance = ToastAppearance() {
+        didSet {
+            initAppearanca()
+        }
+    }
+    private(set) var _data = ToastViewData() {
+        didSet {
+            if !isSkeletorSet {
+                initToastSkeleton()
+                isSkeletorSet = true
+            }
+            
+            if let image = _data.image {
+                imageView.image = image
+            }
+            
+            if let title = _data.title {
+                titleLabel.text = title
+            }
+            
+            if let subtitle = _data.subtitle {
+                subtitleLabel.text = subtitle
+            }
+        }
+    }
     
     public func shouldDismissOnTap() -> Bool { _shouldDismissOnTap }
-    public var position: ToastPosition = .bottom
-    public var autohideDuration: Double = 3.0
-    public var verticalPaddings: CGFloat = 8.0
-    public var horizontalPaddings: CGFloat = 16.0
     
     func set(data: ToastDataPassable) {
         guard
             let data = data as? ToastViewData
         else { fatalError("Couldn't cast to appropriate format") }
                 
-        if let image = data.image {
-            imageView.image = image
-        }
-        
-        if let title = data.title {
-            titleLabel.text = title
-        }
-        
-        if let subtitle = data.subtitle {
-            subtitleLabel.text = subtitle
-        }
+        _data = data
     }
     
     func update(settings: ToastConfigurable) {
         guard
             let settings = settings as? ToastSettings
-        else { fatalError("Couldn't cast to appropriate format") }
+        else { fatalError("Couldn't cast to ToastSettings") }
         _settings = settings
     }
     
+    func update(appearance: ToastAppearanceConfigurable) {
+        guard
+            let appearance = appearance as? ToastAppearance
+        else { fatalError("Couldn't cast to ToastAppearance") }
+        _appearance = appearance
+    }
 }
 // MARK: - Layout
 private extension ToastView {
@@ -207,10 +240,13 @@ private extension ToastView {
         subtitleLabel.textColor = _settings.subtitleColor
         
         _shouldDismissOnTap = _settings.shouldDismissOnTap
-        position = _settings.position
-        autohideDuration = _settings.autohideDuration
-        horizontalPaddings = _settings.horizontalPaddings
-        verticalPaddings = _settings.verticalPaddings
+    }
+    
+    func initAppearanca() {
+        position = _appearance.position
+        autohideDuration = _appearance.autohideDuration
+        horizontalPaddings = _appearance.horizontalPaddings
+        verticalPaddings = _appearance.verticalPaddings
     }
     
     func constructHierarchy() {
@@ -235,8 +271,18 @@ private extension ToastView {
 
 extension ToastView {
     public static func presenter(
+        forAlertWithData data: ToastDataPassable
+    ) -> ToastPresenter {
+        let toastView = ToastView()
+        let settings = ToastSettings()
+        toastView.update(settings: settings)
+        toastView.set(data: data)
+        return toastView.presenter
+    }
+    
+    public static func presenter(
         forAlertWithData data: ToastDataPassable,
-        with settings: ToastConfigurable
+        settings: ToastConfigurable
     ) -> ToastPresenter {
         let toastView = ToastView()
         toastView.update(settings: settings)
@@ -245,11 +291,23 @@ extension ToastView {
     }
     
     public static func presenter(
-        forAlertWithData data: ToastDataPassable
+        forAlertWithData data: ToastDataPassable,
+        appearance: ToastAppearanceConfigurable
     ) -> ToastPresenter {
         let toastView = ToastView()
-        let settings = ToastSettings()
+        toastView.update(appearance: appearance)
+        toastView.set(data: data)
+        return toastView.presenter
+    }
+    
+    public static func presenter(
+        forAlertWithData data: ToastDataPassable,
+        settings: ToastConfigurable,
+        appearance: ToastAppearanceConfigurable
+    ) -> ToastPresenter {
+        let toastView = ToastView()
         toastView.update(settings: settings)
+        toastView.update(appearance: appearance)
         toastView.set(data: data)
         return toastView.presenter
     }

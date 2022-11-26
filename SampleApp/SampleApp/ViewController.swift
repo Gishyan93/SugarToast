@@ -76,10 +76,11 @@ class ViewController: UIViewController {
         let data = ToastViewData(image: UIImage(named: "info")!,
                                  title: "Sugar Title",
                                  subtitle: "Sugar Subtitle")
-        var config = ToastSettings()
-        config.autohideDuration = 10
+        var appearance = ToastAppearance()
+        appearance.autohideDuration = 10
                     
-        let presenter = ToastView.presenter(forAlertWithData: data, with: config)
+        let presenter = ToastView.presenter(forAlertWithData: data,
+                                            appearance: appearance)
         present(presenter, animated: true)
     }
     
@@ -87,9 +88,10 @@ class ViewController: UIViewController {
         let data = ToastViewData(image: UIImage(named: "info")!,
                                  title: "Sugar Title")
                     
-        var config = ToastSettings()
-        config.titleFont = .systemFont(ofSize: 24, weight: .heavy)
-        let presenter = ToastView.presenter(forAlertWithData: data, with: config)
+        var settings = ToastSettings()
+        settings.titleFont = .systemFont(ofSize: 24, weight: .heavy)
+        
+        let presenter = ToastView.presenter(forAlertWithData: data, settings: settings)
         present(presenter, animated: true)
     }
     
@@ -97,10 +99,10 @@ class ViewController: UIViewController {
         let data = ToastViewData(image: UIImage(named: "info")!,
                                  title: "Sugar Title")
                     
-        var config = ToastSettings()
-        config.type = .centeredImage
-        config.titleTextAlignment = .center
-        let presenter = ToastView.presenter(forAlertWithData: data, with: config)
+        var settings = ToastSettings()
+        settings.type = .centeredImage
+        settings.titleTextAlignment = .center
+        let presenter = ToastView.presenter(forAlertWithData: data, settings: settings)
         present(presenter, animated: true)
     }
     
@@ -120,20 +122,24 @@ class ViewController: UIViewController {
                                  title: "Sugar Title",
                                  subtitle: "Sugar Subtitle")
         
-        var config = ToastSettings()
-        config.type = .trailingPinnedImage
-        config.titleTextAlignment = .center
-        config.subtitleTextAlignment = .center
-        config.backgroundColor = .systemGreen
-        config.verticalSpacing = 30
-        config.horizontalSpacing = 15
-        config.cornerRadius = 0
-        config.position = .top
-        config.autohideDuration = 5
-        config.horizontalPaddings = 0
-        config.verticalPaddings = 0
+        var settings = ToastSettings()
+        settings.type = .trailingPinnedImage
+        settings.titleTextAlignment = .center
+        settings.subtitleTextAlignment = .center
+        settings.backgroundColor = .systemGreen
+        settings.verticalSpacing = 30
+        settings.horizontalSpacing = 15
+        settings.cornerRadius = 0
+
+        var appearance = ToastAppearance()
+        appearance.position = .top
+        appearance.autohideDuration = 5
+        appearance.horizontalPaddings = 0
+        appearance.verticalPaddings = 0
         
-        let presenter = ToastView.presenter(forAlertWithData: data, with: config)
+        let presenter = ToastView.presenter(forAlertWithData: data,
+                                            settings: settings,
+                                            appearance: appearance)
         present(presenter, animated: true)
     }
 }

@@ -26,9 +26,6 @@
 import UIKit
 
 public protocol ToastPresentable: AnyObject {
-    static func presenter(forAlertWithData data: ToastDataPassable,
-                          with settings: ToastConfigurable) -> ToastPresenter
-    static func presenter(forAlertWithData data: ToastDataPassable) -> ToastPresenter
     var toastPresenter: ToastPresenter? { get set }
     var view: UIView! { get }
     var position: ToastPosition { get set }
@@ -36,6 +33,22 @@ public protocol ToastPresentable: AnyObject {
     var verticalPaddings: CGFloat { get set }
     var horizontalPaddings: CGFloat { get set }
     func shouldDismissOnTap() -> Bool
+    static func presenter(
+        forAlertWithData data: ToastDataPassable,
+        settings: ToastConfigurable
+    ) -> ToastPresenter
+    static func presenter(
+        forAlertWithData data: ToastDataPassable
+    ) -> ToastPresenter
+    static func presenter(
+        forAlertWithData data: ToastDataPassable,
+        appearance: ToastAppearanceConfigurable
+    ) -> ToastPresenter
+    static func presenter(
+        forAlertWithData data: ToastDataPassable,
+        settings: ToastConfigurable,
+        appearance: ToastAppearanceConfigurable
+    ) -> ToastPresenter
 }
 
 extension ToastPresentable {

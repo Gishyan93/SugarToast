@@ -61,5 +61,4 @@ public protocol ToastContentConfigurable {
 }
 
 public typealias ToastConfigurable = ToastSkeletonConfigurable &
-                                     ToastContentConfigurable &
-                                     ToastAppearanceConfigurable
+                                     ToastContentConfigurable 
