@@ -30,6 +30,8 @@ public enum ToastPosition {
     case bottom
 }
 
+
+/// View Controller that shows toast
 public class ToastPresenter: UIViewController {
     
     var toastContainerView: UIView!
