@@ -1,61 +1,93 @@
-# Installation
+SugarToast
+=============
 
+SugarToast is a Swift extension that adds toast notifications. It is highly customizable, lightweight, and easy to use. Most toast notifications can be triggered with just a few lines of code.
 SugarToast is available through [Swift Package Manager](https://www.swift.org/package-manager/)
 
-# Usage 
+Screenshots
+---------
+![alt tag](https://github.com/Gishyan93/SugarToast/blob/main/Assets/example-1.jpg)
+
+Features
+---------
+
+**Core features:**
+ - Top and bottom positions for toast appearance
+ - Customizable toast properties: Paddings, instets, spacings, cornerRadius, backgroundColor, fonts etc...
+ - Show toast with or without image or change image position: `.leadingPinnedImage`, `.trailingPinnedImage` or `.centeredImage`
+ - Changing autohide duration
+ - Callback to catch dismiss event
+ - Enable or disable dismiss functionality with touch events
+
+**Availability:**
+ - Swift 5.4 (main branch)
+ - iOS >= 13.0
+
+## Demo Sample Application
+
+* `SugarToast/SampleApp/SampleApp.xcodeproj` is the demo project for iOS
+* Make sure you are running a supported version of Xcode.
+  * Usually it is specified here a few lines above.
+  * In most cases it will be the latest Xcode version.
+
+
+## Usage
+
+In order to correctly compile:
 
 ### Initializing somewhere in your ViewController
 ```swift
-let data = ToastViewData(image: UIImage(named: "My-Sugar-image")!,
-                         title: "Sugar Title",
-                         subtitle: "Sugar Subtitle")
-            
-let presenter = ToastView.presenter(forAlertWithData: data)
-present(presenter, animated: true)
+    func createSimpleToast() {
+        let data = ToastViewData(image: UIImage(named: "info")!,
+                                 title: "Sugar Title",
+                                 subtitle: "Sugar Subtitle")
+                    
+        let presenter = ToastView.presenter(forAlertWithData: data)
+        present(presenter, animated: true)
+    }
 ```
 
 ### Customizing
 ```swift
-let data = ToastViewData(image: UIImage(named: "My-Sugar-image")!,
-                         title: "Sugar Title",
-                         subtitle: "Sugar Subtitle")
-                         
- var settings = ToastViewContentSettings()
- settings.type = .centeredImage
- settings.verticalInsets = 20
- settings.horizontalInsets = 20
- settings.horizontalSpacing = 20
- settings.verticalSpacing = 20
- settings.cornerRadius = 0
- settings.titleTextAlignment = .center
- settings.subtitleTextAlignment = .center
-            
-let presenter = ToastView.presenter(forAlertWithData: data, with: settings)
-// Closure will fire right after toast dismissed
-presenter.closeAction = { [weak self] in
-    print("Your code here...")
-}
+    func createCustomizedToast() {
+        let data = ToastViewData(image: UIImage(named: "info")!,
+                                 title: "Sugar Title",
+                                 subtitle: "Sugar Subtitle")
+        
+        var settings = ToastSettings()
+        settings.type = .trailingPinnedImage
+        settings.titleTextAlignment = .center
+        settings.subtitleTextAlignment = .center
+        settings.backgroundColor = .systemGreen
+        settings.verticalSpacing = 30
+        settings.horizontalSpacing = 15
+        settings.cornerRadius = 0
 
-// More customizations
-presenter.autohideDuration = 5
-presenter.horizontalPaddings = 0
-presenter.verticalPaddings = 0
-
-present(presenter, animated: true)
+        var appearance = ToastAppearance()
+        appearance.position = .top
+        appearance.autohideDuration = 5
+        appearance.horizontalPaddings = 0
+        appearance.verticalPaddings = 0
+        
+        let presenter = ToastView.presenter(forAlertWithData: data,
+                                            settings: settings,
+                                            appearance: appearance)
+        present(presenter, animated: true)
+    }
 ```
 
 ### Callback listeners
 ```swift
-let data = ToastViewData(image: UIImage(named: "My-Sugar-image")!,
-                        title: "Sugar Title",
-                        subtitle: "Sugar Subtitle")
-            
-let presenter = ToastView.presenter(forAlertWithData: data)
-// Closure will fire right after toast dismissed
-presenter.closeAction = { [weak self] in
-  print("Your code here...")
-}
-present(presenter, animated: true)
+    func createToastWithCompletion() {
+        let data = ToastViewData(image: UIImage(named: "info")!,
+                                 title: "Sugar Title")
+                    
+        let presenter = ToastView.presenter(forAlertWithData: data)
+        presenter.closeAction = { [weak self] in
+            print("Your business flow here...")
+        }
+        present(presenter, animated: true)
+    }
 ```
 # License
 SugarToast is available under the MIT license. See the LICENSE file for more information.
