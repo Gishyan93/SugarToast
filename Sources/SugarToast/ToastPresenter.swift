@@ -30,10 +30,10 @@ public enum ToastPosition {
     case bottom
 }
 
-
 /// View Controller that shows toast
 public class ToastPresenter: UIViewController {
     
+    var customView: TouchDelegatingView!
     var toastContainerView: UIView!
     var presentingView: ToastPresentable!
     
@@ -66,7 +66,20 @@ public class ToastPresenter: UIViewController {
         self.modalTransitionStyle = .crossDissolve
     }
     
+    public override func loadView() {
+        customView = TouchDelegatingView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.height
+            )
+        )
+        self.view = customView
+    }
+    
     public override func viewDidLoad() {
+        super.viewDidLoad()
         initToastContaineriew()
         constraintHierarchy()
         activateConstraints()
@@ -87,6 +100,13 @@ public class ToastPresenter: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapBackground))
         tap.delegate = self
         view.addGestureRecognizer(tap)
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let delegatingView = view as? TouchDelegatingView {
+            delegatingView.touchDelegate = presentingViewController?.view
+        }
     }
     
     @objc
@@ -179,6 +199,7 @@ private extension ToastPresenter {
                 equalTo: view.trailingAnchor,
                 constant: -presentingView.horizontalPaddings
             )
+            
         ])
     }
 }
@@ -188,7 +209,19 @@ extension ToastPresenter: UIGestureRecognizerDelegate {
         _ gestureRecognizer: UIGestureRecognizer,
         shouldReceive touch: UITouch
     ) -> Bool {
-        if touch.view == self.view { return false }
         return true
+    }
+}
+
+class TouchDelegatingView: UIView {
+    weak var touchDelegate: UIView? = nil
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        if hitView == self {
+            return touchDelegate?.hitTest(point, with: event)
+        } else {
+            return hitView
+        }
     }
 }
