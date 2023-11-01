@@ -90,4 +90,4 @@ In order to correctly compile:
     }
 ```
 # License
-SugarToast is available under the MIT license. See the LICENSE file for more information.
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
