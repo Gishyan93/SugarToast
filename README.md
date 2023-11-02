@@ -2,7 +2,7 @@ SugarToast
 =============
 
 SugarToast is a Swift extension that adds toast notifications. It is highly customizable, lightweight, and easy to use. Most toast notifications can be triggered with just a few lines of code.
-SugarToast is available through [Swift Package Manager](https://www.swift.org/package-manager/)
+SugarToast is available through [Swift Package Manager](https://www.swift.org/package-manager/) and [CocoaPods](https://cocoapods.org/)
 
 Screenshots
 ---------
